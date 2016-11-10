@@ -50,6 +50,3 @@ function throttle(f, ms) {
 		}
 	} 
 }
-var d = delay(log, 10000);
-var b = debounce(log, 10000);
-var t = throttle(log, 10000);

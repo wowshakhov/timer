@@ -8,7 +8,11 @@
     "typescript": "^2.0.8",
     "webpack": "^1.13.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^3.9.1",
+    "eslint-config-google": "^0.7.0",
+    "sinon": "^1.17.6"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

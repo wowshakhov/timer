@@ -5,6 +5,7 @@
     "module": "commonjs"
   },
   "files": [
-    "app.ts"
+    "lib.ts",
+    "test.ts"
   ]
 }

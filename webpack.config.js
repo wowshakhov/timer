@@ -1,7 +1,12 @@
 module.exports = {  
-  entry: './app.ts',
+  entry: {
+    lib: ["./lib.ts"],
+    test: "./test.ts"
+  },
   output: {
-    filename: 'bundle.js'
+    filename: '[name].js',
+    libraryTarget: "commonjs",
+    library: "timer"
   },
   resolve: {
     extensions: ['', '.webpack.js', '.web.js', '.ts', '.js']
