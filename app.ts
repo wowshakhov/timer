@@ -31,25 +31,30 @@ function throttle(ms: number) {
 		let orig = descriptor.value;
 		let flag = true; //:(
 		let call = false; //:(
+		let arg = [];
 
-		descriptor.value = function(...args) {
+		descriptor.value = function(...args) { 
 			if (flag) {
 				orig.apply(this, args);
 				flag = false;
-				setTimeout(function() { 
+				let g = function h() { setTimeout(function() { 
 					flag = true; 
 					if (call) { 
 						orig.apply(this, args); 
 						call = false; 
+						flag = false;
+						h();
 					} 
-				}, ms);
+				}, ms) };
+				g();
 			} else {
+				arg = args;
 				call = true;
 			}
-		return descriptor;
-		}
+		} 
 	}
 }
+
 
 class Test {
 	constructor() { }
@@ -61,4 +66,11 @@ class Test {
 		console.log(s);
 	}
 }
+
+let i = 1;
+let t = new Test();
+t.write((i++).toString());
+t.write((i++).toString());
+t.write((i++).toString());
+
 

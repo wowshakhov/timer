@@ -24,25 +24,32 @@ function debounce(f, ms) {
 function throttle(f, ms) {
 	let flag = true;
 	let call = false;
+	let that = this;
+	let args = [];
+
 	return function() { 
-		let that = this;
-		let args = arguments;
+		that = this;
+		args = arguments;
 		if (flag) {
 			f.apply(that, args);
 			flag = false;
-			setTimeout(function() { 
+			var g = function h() { setTimeout(function() { 
 				flag = true; 
 				if (call) { 
 					f.apply(that, args); 
 					call = false; 
+					flag = false;
+					h();
 				} 
-			}, ms);
+			}, ms) };
+			g();
 		} else {
+			that = this;
+			args = arguments;
 			call = true;
 		}
 	} 
 }
-
 var d = delay(log, 10000);
 var b = debounce(log, 10000);
 var t = throttle(log, 10000);

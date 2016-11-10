@@ -86,6 +86,7 @@
 	        var orig = descriptor.value;
 	        var flag = true; //:(
 	        var call = false; //:(
+	        var arg = [];
 	        descriptor.value = function () {
 	            var args = [];
 	            for (var _i = 0; _i < arguments.length; _i++) {
@@ -94,24 +95,31 @@
 	            if (flag) {
 	                orig.apply(this, args);
 	                flag = false;
-	                setTimeout(function () {
-	                    flag = true;
-	                    if (call) {
-	                        orig.apply(this, args);
-	                        call = false;
-	                    }
-	                }, ms);
+	                var g = function h() {
+	                    setTimeout(function () {
+	                        flag = true;
+	                        if (call) {
+	                            orig.apply(this, args);
+	                            call = false;
+	                            flag = false;
+	                            h();
+	                        }
+	                    }, ms);
+	                };
+	                g();
 	            }
 	            else {
+	                arg = args;
 	                call = true;
 	            }
-	            return descriptor;
 	        };
 	    };
 	}
 	var Test = (function () {
 	    function Test() {
 	    }
+	    //	@delay(3000)
+	    //	@debounce(3000)
 	    Test.prototype.write = function (s) {
 	        console.log(s);
 	    };
@@ -120,11 +128,11 @@
 	    ], Test.prototype, "write", null);
 	    return Test;
 	}());
-	var test = new Test();
-	test.write("test");
-	setTimeout(function () { test.write("test"); }, 1000);
-	setTimeout(function () { test.write("test"); }, 1100);
-	setTimeout(function () { test.write("test"); }, 1200);
+	var i = 1;
+	var t = new Test();
+	t.write((i++).toString());
+	t.write((i++).toString());
+	t.write((i++).toString());
 
 
 /***/ }
