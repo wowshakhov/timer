@@ -1,7 +1,7 @@
 **Установка**
 
 ```
-git clone https://github.com/wowshakhov/apa.git
+git clone https://github.com/wowshakhov/timer.git
 ```
 
 **Использование**
