@@ -4,6 +4,9 @@
 
 ```
 git clone https://github.com/wowshakhov/timer.git
+cd timer
+npm install
+webpack
 ```
 
 **Использование**
