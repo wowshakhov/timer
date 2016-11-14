@@ -21,6 +21,7 @@ describe("delay", function() {
     assert.equal(timer.flag, 1, "assignment didn\'t occur");
   });
 });
+
 describe("debounce", function() {
   it("debounce test", function() {
     var timer = new test.timer.Test();
@@ -35,6 +36,27 @@ describe("debounce", function() {
     assert.equal(timer.flag, 2, "assignment after cooldown didn\'t occur");
   });
 });
+
+describe("cumulative debounce", function() {
+  it("cumulative debounce test", function() {
+    var timer = new test.timer.Test();
+    timer.test_cumulative_debounce();
+    this.clock.tick(200);
+    assert.equal(timer.flag, 1, "initial assignment didn\'t occur");
+    this.clock.tick(600);
+    timer.test_cumulative_debounce();
+    assert.equal(timer.flag, 1, "assignment during cooldown");
+    this.clock.tick(800);
+    timer.test_cumulative_debounce();
+    assert.equal(timer.flag, 1, "assignment during cooldown (2)");
+    timer.test_cumulative_debounce();
+    assert.equal(timer.flag, 1, "assignment during cooldown (3)");
+    this.clock.tick(1200);
+    timer.test_cumulative_debounce();
+    assert.equal(timer.flag, 2, "assignment after cooldown didn\'t occur");
+  });
+});
+
 describe("throttle", function() {
   it("throttle test", function() {
     var timer = new test.timer.Test();
